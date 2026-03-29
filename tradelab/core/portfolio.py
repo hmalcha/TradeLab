@@ -17,38 +17,24 @@
 # You should have received a copy of the GNU General Public License
 # along with TradeLab. If not, see <https://www.gnu.org/licenses/>.
 #
-#
-# This class is an exact copy of the Root class from the SimpLie programm
-# written by Teake Nutma, which is available at
-# https://github.com/teake/simplie.
 
 """
 TradeLab is a a python package for testing automated trading strategies.
 
-This class defines a portfolio on which the trading strategies will be
-executed.
-
+This is a class defines a portfolio of cash and stocks.
 """
 
 class Portfolio:
-    """
-    A class for stock portfolios.
-
-    Attributes:
-        value: The current value of the portfolio
-    """
+    """A class for a portfolio of cash and stock positions."""
 
     def __init__(self, deposit):
-        """
-        Initialize a new portfolio with an inital cash deposit.
-        
-        """
+        """Initialize a new portfolio with an inital cash deposit."""
 
         self.cash = deposit
         self.positions = dict()
         self.prices = dict()
         self.trades = []
-
+    
     def total_value(self):
         "Return the total value of the portfolio given the last known prices."
         return self.cash + self.market_value()
@@ -56,7 +42,6 @@ class Portfolio:
     def market_value(self):
         "Return total value of all positions for the last known price."
         return sum(qty * self.prices.get(ticker) for ticker, qty in self.positions.items())
-
     
     def update_price(self, ticker, price):
         "Update price of a ticker."
@@ -66,7 +51,6 @@ class Portfolio:
         "Update prices of all tickers."
         self.prices.update(price_dict)
 
-    
     def buy_stock(self, ticker, quantity, price, timestamp, fee = 0.0):
         """Buy a stock."""
 
@@ -84,7 +68,7 @@ class Portfolio:
             "qty": quantity,
             "price": price,
             "timestamp": timestamp,
-            "type": "buy"
+            "side": "buy"
             })
 
     def sell_stock(self, ticker, quantity, price, timestamp, fee = 0.0):
@@ -108,5 +92,5 @@ class Portfolio:
             "qty": quantity,
             "price": price,
             "timestamp": timestamp,
-            "type": "sell"
+            "side": "sell"
             })

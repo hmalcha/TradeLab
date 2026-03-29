@@ -17,41 +17,32 @@
 # You should have received a copy of the GNU General Public License
 # along with TradeLab. If not, see <https://www.gnu.org/licenses/>.
 #
-#
-# This class is an exact copy of the Root class from the SimpLie programm
-# written by Teake Nutma, which is available at
-# https://github.com/teake/simplie.
 
 """
 TradeLab is a a python package for testing automated trading strategies.
 
-
-This class defines a simple buy and hold trading strategy.
+This is a derived trading strategy class.
 """
 
 import pandas as pd
-from tradelab.core.order import Order
 from tradelab.strategies.base import Strategy
+from tradelab.core.order import Order
 
 class BuyAndHold(Strategy):
-    """
-    A class for a simple buy and hold strategy.
-    """
+    """A class for a simple buy and hold strategy of a single stock."""
 
-    def __init__(self, ticker, quantity, start_time, end_time):
+    def __init__(self, ticker, quantity, start_time, end_time, offset="0D"):
+        """Initialze a new strategy."""
         self.ticker = ticker
         self.quantity = quantity
-        self.start_time = pd.Timestamp(start_time)
-        self.end_time = pd.Timestamp(end_time)
+        self.start_time = pd.Timestamp(start_time) + pd.Timedelta(offset)
+        self.end_time = pd.Timestamp(end_time) - pd.Timedelta(offset)
         self.has_bought = False
         self.has_sold = False
     
 
-
     def generate_orders(self, data_handler, portfolio, t):
-        """
-        Returns a list of orders to execute at time t.
-        """
+        """Return a list of orders to execute at time t."""
         
         _orders = []
 
@@ -64,7 +55,7 @@ class BuyAndHold(Strategy):
             self.has_bought = True
 
         elif t >= self.end_time and not self.has_sold:
-            # Sell everything
+            # For simplicity sell everything.
             _qty = portfolio.positions.get(self.ticker)
             if _qty > 0:
                 _orders.append(Order(

@@ -17,24 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with TradeLab. If not, see <https://www.gnu.org/licenses/>.
 #
-#
-# This class is an exact copy of the Root class from the SimpLie programm
-# written by Teake Nutma, which is available at
-# https://github.com/teake/simplie.
 
 """
 TradeLab is a a python package for testing automated trading strategies.
 
-
-This class defines a trading strategy, i.e. a list of order to execute at time t.
+This is the base class for a trading strategy, i.e. a list of orders
+to be executed at time t.
 """
 
 class Strategy:
     def generate_orders(self, data, portfolio, t):
-        """
-        Returns a list of orders to execute at time t.
-        """
-
+        """Base class for trading strategies."""
         raise NotImplementedError
-    
-    

@@ -17,34 +17,34 @@
 # You should have received a copy of the GNU General Public License
 # along with TradeLab. If not, see <https://www.gnu.org/licenses/>.
 #
-#
-# This class is an exact copy of the Root class from the SimpLie programm
-# written by Teake Nutma, which is available at
-# https://github.com/teake/simplie.
 
 """
 TradeLab is a a python package for testing automated trading strategies.
 
-This class handles the data coming from yFinance so it can be used by the engine.
-
+This class serves stock data from yfinance to the trading engine.
 """
 
 import yfinance as yf
 
 class YFinanceDataHandler:
-    def __init__(self, tickers, start, end):
+    """A class for serving data from yfinance to the trading engine."""
+
+    def __init__(self, tickers, start_time, end_time):
+        """Initialize the data handler and download the stock data."""
+
         self.tickers = tickers
-        self.start = start
-        self.end = end
+        self.start_time = start_time
+        self.end_time = end_time
         self.data = self._download()
 
 
     def _download(self):
-        """Download data."""
-        
-        _df = yf.download(self.tickers, start=self.start, end=self.end, auto_adjust=False)
+        """Download and prepare stock data."""
 
-        # Use adjusted close
+        print("Downloading stock data")
+        _df = yf.download(self.tickers, start=self.start_time, end=self.end_time, auto_adjust=False)
+
+        # Only keep the adjusted close
         if len(self.tickers) == 1:
             _df = _df[["Adj Close"]].rename(columns={"Adj Close": self.tickers[0]})
         else:
@@ -55,10 +55,14 @@ class YFinanceDataHandler:
         return _df
     
     def get_prices(self, t):
-        """Get prices."""
+        """
+        Serve prices at time t as a dict with ticker as a key and price
+        as value.
+        """
+
         _row = self.data.loc[t]
         return _row.to_dict()
     
     def get_timeline(self):
-        """Get timeline."""
+        """Serve timeline."""
         return list(self.data.index)

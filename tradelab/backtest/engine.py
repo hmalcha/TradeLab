@@ -17,30 +17,28 @@
 # You should have received a copy of the GNU General Public License
 # along with TradeLab. If not, see <https://www.gnu.org/licenses/>.
 #
-#
-# This class is an exact copy of the Root class from the SimpLie programm
-# written by Teake Nutma, which is available at
-# https://github.com/teake/simplie.
 
 """
 TradeLab is a a python package for testing automated trading strategies.
 
-This class defines the trading engine used for backtesting.
-
+This is a class for the trading engine.
 """
 
 class TradingEngine:
     """
-    A class for the trading engine.
+    A class for the trading engine that is used for backtesting trading
+    stragies.
     """
 
     def __init__(self, portfolio, strategy, data_handler):
+        """Initialize trading engine."""
         self.portfolio = portfolio
         self.strategy = strategy
         self.data_handler = data_handler
         self.history = []
 
     def run_backtest(self):
+        """Run backtest."""
         _timeline = self.data_handler.get_timeline()
 
         for t in _timeline:
@@ -68,8 +66,5 @@ class TradingEngine:
                 "total_value": self.portfolio.total_value()
             })
 
+        print("Backtesting complete.")
         return self.history
-
-
-
-

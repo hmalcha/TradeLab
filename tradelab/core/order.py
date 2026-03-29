@@ -17,22 +17,19 @@
 # You should have received a copy of the GNU General Public License
 # along with TradeLab. If not, see <https://www.gnu.org/licenses/>.
 #
-#
-# This class is an exact copy of the Root class from the SimpLie programm
-# written by Teake Nutma, which is available at
-# https://github.com/teake/simplie.
 
 """
 TradeLab is a a python package for testing automated trading strategies.
 
-This dataclass for trading orders.
-
+This is a class for trading orders.
 """
 
-from dataclasses import dataclass
-
-@dataclass
 class Order:
-    ticker: str
-    quantity: float
-    side: str
+    """A class for storing trading orders."""
+
+    def __init__(self, ticker, quantity, side):
+        """Initialize trading order."""
+        
+        self.ticker = ticker
+        self.quantity = quantity
+        self.side = side
