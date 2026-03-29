@@ -1,5 +1,5 @@
 # TradeLab
-A python package for testing automated trading strategies.
+A python package for testing algorithmic trading strategies.
 
 ## Usage
 Execute the provided Jupyter nootebooks to analyze the performance of
