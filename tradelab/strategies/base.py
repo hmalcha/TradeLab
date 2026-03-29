@@ -19,7 +19,7 @@
 #
 
 """
-TradeLab is a a python package for testing automated trading strategies.
+TradeLab is a a python package for testing algorithmic trading strategies.
 
 This is the base class for a trading strategy, i.e. a list of orders
 to be executed at time t.

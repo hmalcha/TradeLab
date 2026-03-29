@@ -19,7 +19,7 @@
 #
 
 """
-TradeLab is a a python package for testing automated trading strategies.
+TradeLab is a a python package for testing algorithmic trading strategies.
 
 This class serves stock data from yfinance to the trading engine.
 """
