@@ -41,7 +41,7 @@ class YFinanceDataHandler:
     def _download(self):
         """Download and prepare stock data."""
 
-        print("Downloading stock data")
+        print("Downloading stock data.")
         _df = yf.download(self.tickers, start=self.start_time, end=self.end_time, auto_adjust=False)
 
         # Only keep the adjusted close
