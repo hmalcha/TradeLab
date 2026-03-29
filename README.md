@@ -1,5 +1,23 @@
 # TradeLab
-A python package for testing automated trading strategies
+A python package for testing automated trading strategies.
+
+## Usage
+Execute the provided Jupyter nootebooks to analyze the performance of
+various trading strategies.
+
+## Trading Model
+![Visualization of trading model.](img/tradelab_model.png?raw=true "Trading Model")
+
+The trading model consits of a data handler, a trading strategy, a trading engine, and a portfolio.
+
+The data handler downloads stock data and serves it to the trading engine.
+The trading strategy runs a backtest for a given timeline.
+For every day in the timeline it uses the trading strategy and the historic
+data provided by the data handler to compute the list of orders and then
+executes them on a portfolio. The portfolio records all transactions.
+The trading engine returns a list of the positions and total value of the
+portfolio for each day in the timeline.
+
 
 ## License
 Copyright © 2026 Hannes Malcha
