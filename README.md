@@ -18,7 +18,6 @@ executes them on a portfolio. The portfolio records all transactions.
 The trading engine returns a list of the positions and total value of the
 portfolio for each day in the timeline.
 
-
 ## License
 Copyright © 2026 Hannes Malcha
 
