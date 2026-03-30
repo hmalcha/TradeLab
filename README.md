@@ -8,15 +8,24 @@ various trading strategies.
 ## Trading Model
 ![Visualization of trading model.](img/tradelab_model.png?raw=true "Trading Model")
 
-The trading model consits of a data handler, a trading strategy, a trading engine, and a portfolio.
+The trading model consits of a data handler, a trading strategy, and
+a trading engine. 
+Moreover, it contains classes for stock portfolios and trading orders, which
+are used to execute the trading model.
 
-The data handler downloads stock data and serves it to the trading engine.
-The trading strategy runs a backtest for a given timeline.
-For every day in the timeline it uses the trading strategy and the historic
-data provided by the data handler to compute the list of orders and then
-executes them on a portfolio. The portfolio records all transactions.
-The trading engine returns a list of the positions and total value of the
-portfolio for each day in the timeline.
+The data handler recieves historic stock data from a remote provider such as
+Yahoo Finance.
+The data is served to the trading engine and the trading strategy.
+The trading engine runs a backtest of the trading strategy.
+For every data point in the stock data the trading engine calls the trading
+strategy to compute a list of buy and sell orders.
+The trading engine then places these order on the portfolio and records
+the performance data.
+The portfolio records a list of all transactions.
+Finally, the trading engine returns a list of the positions held and the total
+value of the portfolio for each time in the stock data.
+This output is used in the Jupyter notebooks to visualize the performance of
+various trading strategies.
 
 ## License
 Copyright © 2026 Hannes Malcha
