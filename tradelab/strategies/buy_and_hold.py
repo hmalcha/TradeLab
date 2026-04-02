@@ -31,39 +31,29 @@ from tradelab.core.order import Order
 class BuyAndHold(Strategy):
     """A class for a simple buy and hold strategy of a single stock."""
 
-    def __init__(self, ticker, quantity, start_time, end_time, offset="0D"):
+    def __init__(self, tickers, start_time, end_time, offset="0D"):
         """Initialze a new strategy."""
-        self.ticker = ticker
-        self.quantity = quantity
+        self.tickers = tickers
         self.start_time = pd.Timestamp(start_time) + pd.Timedelta(offset)
         self.end_time = pd.Timestamp(end_time) - pd.Timedelta(offset)
         self.has_bought = False
         self.has_sold = False
     
 
-    def generate_orders(self, data_handler, portfolio, t):
-        """Return a list of orders to execute at time t."""
+    def generate_target_weights(self, data_handler, portfolio, t):
+        """Return a dict of target weights at time t."""
         
-        _orders = []
+        _target_weights = dict()
+        _weight = 1.0 / len(self.tickers)
 
         if t >= self.start_time and not self.has_bought:
-            _orders.append(Order(
-                ticker = self.ticker,
-                quantity = self.quantity,
-                side = "buy"
-            ))
+            _target_weights = {ticker: _weight for ticker in self.tickers}
             self.has_bought = True
 
         elif t >= self.end_time and not self.has_sold:
             # For simplicity sell everything.
-            _qty = portfolio.positions.get(self.ticker)
-            if _qty > 0:
-                _orders.append(Order(
-                    ticker = self.ticker,
-                    quantity = _qty,
-                    side = "sell"
-                ))
+            _target_weights = {ticker: 0 for ticker in self.tickers}
             self.has_sold = True
 
-        return _orders
+        return _target_weights
     

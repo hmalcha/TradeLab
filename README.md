@@ -10,16 +10,17 @@ various trading strategies.
 
 The trading model consits of a data handler, a trading strategy, and
 a trading engine. 
-Moreover, it contains classes for stock portfolios and trading orders, which
-are used to execute the trading model.
+Moreover, it contains classes for stock portfolios, position sizing, and
+trading orders, which are used to execute the trading model.
 
 The data handler recieves historic stock data from a remote provider such as
 Yahoo Finance.
 The data is served to the trading engine and the trading strategy.
 The trading engine runs a backtest of the trading strategy.
 For every data point in the stock data the trading engine calls the trading
-strategy to compute a list of buy and sell orders.
-The trading engine then places these order on the portfolio and records
+strategy to compute a list target weights for all given stocks.
+The position sizer then turns these weights into buy and sell orders
+and the trading engine places these order on the portfolio and records
 the performance data.
 The portfolio records a list of all transactions.
 Finally, the trading engine returns a list of the positions held and the total

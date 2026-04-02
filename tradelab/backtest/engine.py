@@ -30,11 +30,12 @@ class TradingEngine:
     stragies.
     """
 
-    def __init__(self, portfolio, strategy, data_handler):
+    def __init__(self, portfolio, strategy, data_handler, position_sizer):
         """Initialize trading engine."""
         self.portfolio = portfolio
         self.strategy = strategy
         self.data_handler = data_handler
+        self.position_sizer = position_sizer
         self.history = []
 
     def run_backtest(self):
@@ -48,8 +49,11 @@ class TradingEngine:
             # Update portfolio prices
             self.portfolio.update_prices(_prices)
 
+            # Generate target weights
+            _target_weights = self.strategy.generate_target_weights(self.data_handler, self.portfolio, t)
+
             # Generate orders
-            _orders = self.strategy.generate_orders(self.data_handler, self.portfolio, t)
+            _orders = self.position_sizer.generate_orders(_target_weights, self.portfolio, _prices)
 
             # Execute orders
             for order in _orders:

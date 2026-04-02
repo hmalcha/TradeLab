@@ -26,6 +26,6 @@ to be executed at time t.
 """
 
 class Strategy:
-    def generate_orders(self, data, portfolio, t):
+    def generate_target_weights(self, data, portfolio, t):
         """Base class for trading strategies."""
         raise NotImplementedError
