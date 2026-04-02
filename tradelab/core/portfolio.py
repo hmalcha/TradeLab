@@ -34,6 +34,7 @@ class Portfolio:
         self.positions = dict()
         self.prices = dict()
         self.trades = []
+        self.total_fees_paid = 0
     
     def total_value(self):
         "Return the total value of the portfolio given the last known prices."
@@ -60,6 +61,7 @@ class Portfolio:
             raise ValueError("Not enough cash.")
         
         self.cash -= _cost
+        self.total_fees_paid += fee
         self.positions[ticker] = self.positions.get(ticker, 0.0) + quantity
         self.prices[ticker] = price
 
@@ -81,6 +83,7 @@ class Portfolio:
 
         
         self.cash += _payoff
+        self.total_fees_paid += fee
         self.positions[ticker] -= quantity
         self.prices[ticker] = price
 

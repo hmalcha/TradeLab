@@ -30,12 +30,13 @@ class TradingEngine:
     stragies.
     """
 
-    def __init__(self, portfolio, strategy, data_handler, position_sizer):
+    def __init__(self, portfolio, strategy, data_handler, position_sizer, execution_model):
         """Initialize trading engine."""
         self.portfolio = portfolio
         self.strategy = strategy
         self.data_handler = data_handler
         self.position_sizer = position_sizer
+        self.execution_model = execution_model
         self.history = []
 
     def run_backtest(self):
@@ -55,13 +56,15 @@ class TradingEngine:
             # Generate orders
             _orders = self.position_sizer.generate_orders(_target_weights, self.portfolio, _prices)
 
+            # Generate fills
+            _fills = [self.execution_model.execute_order(order, _prices[order.ticker]) for order in _orders]
+
             # Execute orders
-            for order in _orders:
-                _price = _prices[order.ticker]
-                if order.side == "buy":
-                    self.portfolio.buy_stock(order.ticker, order.quantity, _price, t, fee = 0.0)
-                elif order.side == "sell":
-                    self.portfolio.sell_stock(order.ticker, order.quantity, _price, t, fee = 0.0)
+            for fill in _fills:
+                if fill.side == "buy":
+                    self.portfolio.buy_stock(fill.ticker, fill.quantity, fill.price, t, fill.fee)
+                elif fill.side == "sell":
+                    self.portfolio.sell_stock(fill.ticker, fill.quantity, fill.price, t, fill.fee)
 
             # Record History
             self.history.append({

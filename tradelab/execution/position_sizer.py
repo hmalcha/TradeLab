@@ -33,7 +33,9 @@ class PositionSizer:
         """Generate orders for a given set of target weights."""
         
         _orders = []
-        _total_value = portfolio.total_value()
+
+        # Only trade with 95% of portfolio to allow for fees.
+        _total_value = 0.95 * portfolio.total_value()
 
         for ticker, weight in target_weights.items():
             _price = prices[ticker]
