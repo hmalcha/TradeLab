@@ -56,8 +56,18 @@ class Momentum(Strategy):
             _momenta = [(ticker, self._compute_momentum(ticker, _timeline, data_handler, t)) for ticker in self.tickers]            
             _momenta = sorted(_momenta, key=lambda x: x[1], reverse=True)
 
-            _weight = 1.0 / self.buy_top_n
+            # Add the best performing stock and keep stocks with positive momentum
+            #_top_set = {ticker for ticker, momentum in _momenta[:self.buy_top_n]}
 
+            #_top_tickers = [
+            #    ticker for ticker, momentum in _momenta
+            #    if momentum > 0 and (ticker in _top_set or ticker in portfolio.positions)
+            #]
+
+            #_weight = 1.0 / max(len(_top_tickers), 1.0)
+
+            # Do not keep any stock in portfolio
+            _weight = 1.0 / self.buy_top_n
             _top_tickers = [ticker for ticker, momentum in _momenta[:self.buy_top_n] if momentum > 0]
 
             _target_weights = {
