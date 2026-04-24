@@ -29,20 +29,21 @@ import yfinance as yf
 class YFinanceDataHandler:
     """A class for serving data from yfinance to the trading engine."""
 
-    def __init__(self, tickers, start_time, end_time):
+    def __init__(self, tickers, start_time, end_time, progress=True):
         """Initialize the data handler and download the stock data."""
 
         self.tickers = tickers
         self.start_time = start_time
         self.end_time = end_time
-        self.data = self._download()
+        self.data = self._download(progress)
 
 
-    def _download(self):
+    def _download(self, progress=True):
         """Download and prepare stock data."""
 
-        print("Downloading stock data.")
-        _df = yf.download(self.tickers, start=self.start_time, end=self.end_time, auto_adjust=False)
+        if progress:
+            print("Downloading stock data.")
+        _df = yf.download(self.tickers, start=self.start_time, end=self.end_time, auto_adjust=False, progress=progress)
 
         # Only keep the adjusted close
         if len(self.tickers) == 1:
